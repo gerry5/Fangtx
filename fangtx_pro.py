@@ -42,10 +42,11 @@ class LinkMysql(object):
         mobiles = []
         for result in results:      # 清洗数据
             mobile = result[0]        # 取(10086,)第一元
-            if len(mobile) == 11:
-                mobiles.append(mobile)
-            elif len(mobile) > 11:
-                mobiles.append(mobile.strip()[-11:])    # 后11位
+            if mobile is not None:
+                if len(mobile) == 11:
+                    mobiles.append(mobile)
+                elif len(mobile) > 11:
+                    mobiles.append(mobile.strip()[-11:])    # 后11位
 
         return mobiles
 
