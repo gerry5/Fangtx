@@ -116,7 +116,9 @@ if __name__ == '__main__':
     while mysql.read_page < ENDPAGE:
         print("当前读取页面：%s, 分页大小：%s, 开始页面: %s, 结束页面: %s" % (mysql.read_page, PAGESIZE, STARTPAGE, ENDPAGE))
 
+        lock.acquire()
         mobiles = mysql.get_mobile()  # 获取一页数据
+        lock.release()
 
         for mobile in mobiles[:]:
             q.put(mobile)

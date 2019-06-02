@@ -1,7 +1,7 @@
 # 页面设置
 STARTPAGE = 0     # 开始页面
 ENDPAGE   = 1     # 结束页面
-PAGESIZE  = 30000    # 分页读取行数
+PAGESIZE  = 10000    # 分页读取行数
 
 # 线程数量设置
 THREAD_NUM = 10
