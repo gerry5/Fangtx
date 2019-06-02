@@ -5,7 +5,6 @@ import threading
 import pymysql
 import warnings
 warnings.filterwarnings("ignore")
-from threading import Lock
 
 from config import *
 
@@ -76,7 +75,7 @@ class FangTX(object):
             if r.status_code == 200:
                 try:
                     r = json.loads(r.text)
-                    if r["IsShowMathCode"] == "true" or r["Tip"] == "验证码已发送到您的手机，当日内有效":
+                    if r["Tip"] == "" or r["IsShowMathCode"] == "true" or r["Tip"] == "验证码已发送到您的手机，当日内有效":
                         print(mobile)
 
                         lock.acquire()

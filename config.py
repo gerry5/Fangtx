@@ -19,7 +19,7 @@ COLUMN    = "mobile"
 SAVE_TABLE = "fangtx_registered"
 
 # 打印设置 1: 只显示成功结果  0: 显示所有结果
-PRINT = 0
+PRINT = 1
 
 """
 
