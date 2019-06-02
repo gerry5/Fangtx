@@ -19,4 +19,13 @@ COLUMN    = "mobile"
 SAVE_TABLE = "fangtx_registered"
 
 # 打印设置 1: 只显示成功结果  0: 显示所有结果
-PRINT = 1
+PRINT = 0
+
+"""
+
+git clone https://github.com/Juaran/Fangtx.git
+cd Fangtx
+vi config.py
+
+screen python3 fangtx_pro.py
+"""

@@ -70,31 +70,32 @@ class FangTX(object):
         }
 
     def get_verify(self, mobile):
-        r = self.session.post(self.login_url % mobile, headers=self.headers)
+        try:
+            r = self.session.post(self.login_url % mobile, headers=self.headers)
 
-        if r.status_code == 200:
-            try:
-                r = json.loads(r.text)
-                if r["IsShowMathCode"] == "true" \
-                        or r["Tip"] == "您的手机号未正式验证，请先动态登录进行验证":
-                    print(mobile)
+            if r.status_code == 200:
+                try:
+                    r = json.loads(r.text)
+                    if r["IsShowMathCode"] == "true" or r["Tip"] == "验证码已发送到您的手机，当日内有效":
+                        print(mobile)
 
-                    lock.acquire()
-                    mysql.save_mobile(mobile)       # 保存结果
-                    lock.release()
+                        lock.acquire()
+                        mysql.save_mobile(mobile)       # 保存结果
+                        lock.release()
 
-                    # return True
-                elif r["Tip"] == "手机号未绑定":
-                    if PRINT == 0:
-                        print(mobile, r["Tip"])
-                else:
-                    print(mobile, "未知结果", r)
+                    elif r["Tip"] == "手机号未绑定" or r["Tip"] == "您的手机号未正式验证，请先动态登录进行验证":
+                        if PRINT == 0:
+                            print(mobile, r["Tip"])
+                    else:
+                        print(mobile, "未知结果", r)
 
-            except Exception:
-                print("请求结果解析异常：", r.text)
-        else:
-            print("状态码异常：", r.status_code)
-            # TODO 异常重试
+                except Exception:
+                    print("请求结果解析异常：", r.text)
+            else:
+                print("状态码异常：", r.status_code)
+                # TODO 异常重试
+        except Exception as e:
+            self.get_verify(mobile)
 
     def run(self, ):
         while not q.empty():
